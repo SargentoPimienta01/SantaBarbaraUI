@@ -14,7 +14,9 @@
     </div>
 
     <div class="main-content">
+        <div class="main">
         <slot />
+        </div>
     </div>
 
     <div class="links">
@@ -30,16 +32,7 @@
     <div class="shadow two"></div>
 </div>
 
-<script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-        const hamburgerMenu = document.querySelector(".hamburger-menu");
-        const container = document.querySelector(".container");
 
-        hamburgerMenu?.addEventListener("click", () => {
-            container?.classList.toggle("active");
-        });
-    });
-</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300&display=swap');
@@ -50,16 +43,22 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
+html, body {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 
 .container {
-    min-height: 100svh;
+    min-height: 100vh;
     width: 100%;
     background-color: #217c24;
     background-image: linear-gradient(62deg, #217c24 22%, #0b4e0c 100%);
     overflow-x: hidden;
     transform-style: preserve-3d;
-}
-
+} 
 .navbar {
     position: fixed;
     top: 0;
@@ -79,7 +78,7 @@
     align-items: center;
     color: #fff;
 
-    /* border: 1px solid white; */
+
 }
 
 .logo {
@@ -134,7 +133,6 @@
     background-color: transparent;
 }
 
-/* Animación cuando la clase 'active' está presente */
 .container.active .main-content {
     transform: perspective(1300px) rotateY(20deg) translateZ(310px) scale(0.5);
     transition: transform 0.5s ease;
@@ -158,10 +156,10 @@
     transform: translateY(0) rotate(-45deg);
 }
 
-.container.active .main{
+/* .container.active .main{
     cursor: pointer;
     transform: perspective(1300px) rotateY(20deg) translateZ(310px) scale(.5);
-}
+} */
 
 
 .links{
@@ -228,7 +226,7 @@ ul{
     }
 }
 
-/* Sombras */
+
 .shadow{
     position: absolute;
     width: 100%;
@@ -280,7 +278,6 @@ ul{
                 translateZ(230px)
                 scale(.5);
 }
-
 .container.active .main:hover{
     transform: perspective(1300px)
                 rotateY(20deg)
