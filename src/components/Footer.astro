@@ -1,0 +1,61 @@
+---
+// Footer.astro
+---
+<footer class="footer">
+    <div class="footer__content">
+        <div class="footer__info">
+            <h2>Granja Santa Barbara</h2>
+            <p>Calidad y precisión en la detección de inviabilidad de huevos.</p>
+        </div>
+        <ul class="footer__links">
+            <li><a href="/privacidad">Política de Privacidad</a></li>
+            <li><a href="/terminos">Términos y Condiciones</a></li>
+            <li><a href="/contacto">Contáctanos</a></li>
+        </ul>
+    </div>
+    <p class="footer__copy">© 2024 Granja Santa Barbara. Todos los derechos reservados.</p>
+</footer>
+
+<style>
+    .footer {
+        background: #0b4e0c;
+        color: #f1f1f1;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .footer__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .footer__info h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .footer__links {
+        display: flex;
+        gap: 1.5rem;
+        list-style: none;
+    }
+
+    .footer__links a {
+        color: #f1f1f1;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer__links a:hover {
+        color: #ffdd57;
+    }
+
+    .footer__copy {
+        margin-top: 1rem;
+        font-size: 0.875rem;
+    }
+</style>
