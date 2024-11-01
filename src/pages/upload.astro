@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ImageUploader from '../components/UploadImagen.jsx';
+
+const title = "Carga y Previsualización de Imágenes";
+const description = "Sube tus imágenes para ver una previsualización y administrar la carga.";
+--- 
+
+<Layout title={title}>
+<div class="w-full flex flex-col items-center py-10 bg-gradient-to-b from-blue-50 to-gray-100 min-h-screen">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">{title}</h1>
+    <p class="text-gray-600 text-center mb-8">{description}</p>
+
+    <ImageUploader client:load />
+</div>
+</Layout>
+
+<style>
+    /* Agrega estilos personalizados si es necesario */
+</style>
