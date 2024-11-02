@@ -22,11 +22,15 @@ import Layout from '../layouts/Layout.astro';
                         <div class="inner">
                             <h2 class="title">Deteccion de Invihabilidad</h2>
                             <p>
-                            Discover the wonders of nature, where every moment is a masterpiece of tranquility and harmony.
-                            Immerse yourself in the serene landscapes and let the soothing embrace of the natural world captivate your soul.
+                                Este aplicativo está diseñado para optimizar la incubación y crianza de aves mediante el análisis avanzado de imágenes. 
+                                Nuestro sistema identifica características clave en los huevos COBB 500, como tonalidades, irregularidades en la cáscara y otros 
+                                factores que pueden afectar su viabilidad. Al detectar con precisión huevos inviables en las primeras etapas, se reduce el riesgo de pérdidas, 
+                                promoviendo una producción más eficiente y sostenible.
                             </p>
                             <button class="btn">
-                                Explore Nature
+                                <a href="/estadisticas">
+                                Estadisticas
+                                </a>
                             </button>
                         </div>
                     </div>
@@ -40,8 +44,8 @@ import Layout from '../layouts/Layout.astro';
             <ul>
                 <li><a href="/">INICIO</a></li>
                 <li><a href="/calibracion">CALIBRACION</a></li>
-                <li><a href="#">SUBIR IMAGEN</a></li>
-                <li><a href="#">DETECCION</a></li>
+                <li><a href="/upload">SUBIR IMAGEN</a></li>
+                <li><a href="/deteccion">DETECCION</a></li>
                 <li><a href="#">ESTADISTICAS</a></li>
             </ul>
         </div>
@@ -81,6 +85,11 @@ html, body{
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
 }
 
 .container{
