@@ -1,67 +1,143 @@
 ---
-// Navbar.astro
+
 ---
-<nav class="navbar">
-    <div class="navbar__logo">
-        <h1>Aplicativo de Calibración</h1>
+
+<div class="toggle">
+    <div class="hamburger-menu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
     </div>
-    <ul class="navbar__links">
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/calibracion">Calibración</a></li>
-        <li><a href="/estadisticas">Estadísticas</a></li>
-        <li><a href="/configuracion">Configuración</a></li>
+</div>
+<div class="menu">
+    <ul>
+        <li><a target="_blank" data-text="INICIO" href="/">INICIO</a></li>
+        <li><a target="_blank" data-text="CALIBRACION" href="#">CALIBRACION</a></li>
+        <li><a target="_blank" data-text="SUBIR IMAGEN" href="#">SUBIR IMAGEN</a></li>
+        <li><a target="_blank" data-text="DETECCION" href="#">DETECCION</a></li>
+        <li><a target="_blank" data-text="ESTADISTICAS" href="#">ESTADISTICAS</a></li>
     </ul>
-</nav>
+</div>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector('.toggle')?.addEventListener('click', function() {
+        document.querySelector('.menu')?.classList.toggle('active');
+    });
+});
+</script>
 
 <style>
-    .navbar {
+    .toggle{
+        position: fixed;
+        top: 40px;
+        left: 40px;
+        z-index: 2
+    }
+
+    .menu{
+        margin: 0;
+        padding: 0;
         position: fixed;
         top: 0;
+        left: -100%;
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        background: linear-gradient(135deg, #217c24, #0b4e0c);
-        color: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        height: 100%;
+        background: #FFF;
+        z-index: 1;
+        transition: 0.5s;
     }
-
-    .navbar__logo h1 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        letter-spacing: 1px;
+    
+    ul {
         margin: 0;
-    }
-
-    .navbar__links {
-        display: flex;
-        gap: 1.5rem;
-        list-style: none;
-    }
-
-    .navbar__links a {
-        color: white;
-        text-decoration: none;
-        font-size: 1rem;
-        font-weight: 500;
-        position: relative;
-        transition: color 0.3s ease;
-    }
-
-    .navbar__links a:hover::after {
-        content: '';
+        padding: 0;
         position: absolute;
-        width: 100%;
-        height: 2px;
-        bottom: -4px;
-        left: 0;
-        background-color: #ffdd57;
-        visibility: visible;
-        border-radius: 2px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    ul li {
+        list-style: none;
+        text-align: center;
+    }
+    ul li a {
+        color: #333;
+        text-decoration: none;
+        font-size: 3em;
+        padding: 5px 20px;
+        display: inline-flex;
+        font-weight: 700;
+        transition: 0.5s;
+    }
+    ul:hover li a {
+        color: #0002;
+    }
+    ul li:hover a {
+        color: #000;
+        background: transparent;
+    }
+    ul li a:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 5em;
+        color: rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        z-index: -1;
+        opacity: 0;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 500px;
+        transition: letter-spacing 0.5s, left 0.5s;
+    }
+    ul li a:hover:before {
+        content: attr(data-text);
+        opacity: 1;
+        left: 50%;
+        letter-spacing: 10px;
+        width: 1800px;
+        height: 1800px;
+    }
+    ul li:nth-child(6n + 1) a:before {
+        background: #0470fe;
+    }
+    ul li:nth-child(6n + 2) a:before {
+        background: #ff7675;
+    }
+    ul li:nth-child(6n + 3) a:before {
+        background: #1582fe;
+    }
+    ul li:nth-child(6n + 4) a:before {
+        background: #a29bfe;
+    }
+    ul li:nth-child(6n + 5) a:before {
+        background: #fd79a8;
+    }
+    ul li:nth-child(6n + 6) a:before {
+        background: #ffeaa7;
     }
 
-    .navbar__links a:hover {
-        color: #ffdd57;
+    .menu.active{
+        left: 0;
+        overflow: auto;
     }
+
+    .bar{
+        width: 1.9rem;
+        height: 1.5px;
+
+        border-radius: 2px;
+        background-color: #eee;
+        transition: .5s ;
+        position: relative;
+
+        padding-top: 5px;
+    }
+
 </style>
