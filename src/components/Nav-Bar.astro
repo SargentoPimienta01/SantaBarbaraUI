@@ -2,14 +2,14 @@
 
 ---
 
-<div class="toggle">
+<div class="toggle" id="toggle-button">
     <div class="hamburger-menu">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
     </div>
 </div>
-<div class="menu">
+<div class="menu" id="menu">
     <ul>
         <li><a data-text="INICIO" href="/">INICIO</a></li>
         <li><a data-text="CALIBRACION" href="/calibracion">CALIBRACION</a></li>
@@ -21,21 +21,33 @@
 
 <script is:inline>
     document.addEventListener("DOMContentLoaded", function() {
-    document.querySelector('.toggle')?.addEventListener('click', function() {
-        document.querySelector('.menu')?.classList.toggle('active');
+        const toggleButton = document.getElementById('toggle-button');
+        const menu = document.getElementById('menu');
+
+        toggleButton?.addEventListener('click', function() {
+            menu?.classList.toggle('active');
+        });
+
+
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');  
+            });
+        });
     });
-});
 </script>
 
 <style>
-    .toggle{
+    /* Aquí va el estilo personalizado del NavBar, tal como tienes actualmente. */
+
+    .toggle {
         position: fixed;
         top: 40px;
         left: 40px;
-        z-index: 2
+        z-index: 2;
     }
 
-    .menu{
+    .menu {
         margin: 0;
         padding: 0;
         position: fixed;
@@ -47,11 +59,11 @@
         z-index: 1;
         transition: 0.5s;
     }
-    
+
     ul {
         margin: 0;
         padding: 0;
-        position: absolute;
+        position: relative;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -123,21 +135,18 @@
         background: #ffeaa7;
     }
 
-    .menu.active{
+    .menu.active {
         left: 0;
         overflow: auto;
     }
 
-    .bar{
+    .bar {
         width: 1.9rem;
         height: 1.5px;
-
         border-radius: 2px;
         background-color: #eee;
-        transition: .5s ;
+        transition: .5s;
         position: relative;
-
         padding-top: 5px;
     }
-
 </style>
