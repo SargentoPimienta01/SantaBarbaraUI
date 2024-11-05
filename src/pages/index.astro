@@ -1,37 +1,55 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Driver from 'driver.js';
-import 'driver.js/dist/driver.min.css';
----
 
-	<div class="container">
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- Include Driver.js CSS via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.css"/>
+    <style>
+        /* Custom styling for Driver.js */
+        .custom-popover {
+            background-color: #ffffff;
+            color: #333333;
+            border: 1px solid #29b546;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .driver-active .driver-overlay {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .custom-popover .driver-popover-arrow {
+            border-color: #29b546;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
         <div class="navbar">
-            <div class="menu">
-                <h3 class="logo">
-                    Granja <span>Santa Barbara</span>
-                </h3>
-                <div class="hamburger-menu">
+            <div class="menu" id="menu">
+                <h3 class="logo" id="logo">Granja <span>Santa Barbara</span></h3>
+                <div class="hamburger-menu" id="hamburger">
                     <div class="bar"></div>
                 </div>
             </div>
         </div>
 
-        <div class="main-container">
+        <div class="main-container" id="main">
             <div class="main">
                 <header>
                     <div class="overlay">
                         <div class="inner">
-                            <h2 class="title">DETECCION DE INVIABILIDAD</h2>
+                            <h2 class="title">DETECCIÓN DE INVIABILIDAD</h2>
                             <p>
-                                Este aplicativo está diseñado para optimizar la incubación y crianza de aves mediante el análisis avanzado de imágenes. 
-                                Nuestro sistema identifica características clave en los huevos COBB 500, como tonalidades, irregularidades en la cáscara y otros 
-                                factores que pueden afectar su viabilidad. Al detectar con precisión huevos inviables en las primeras etapas, se reduce el riesgo de pérdidas, 
-                                promoviendo una producción más eficiente y sostenible.
+                                Este aplicativo está diseñado para optimizar la incubación y crianza de aves mediante el análisis avanzado de imágenes.
                             </p>
-                            <button class="btn">
-                                <a href="/estadisticas">
-                                Estadisticas
-                                </a>
+                            <button class="btn" id="estadisticas">
+                                <a href="/estadisticas">Estadísticas</a>
                             </button>
                         </div>
                     </div>
@@ -41,57 +59,115 @@ import 'driver.js/dist/driver.min.css';
             <div class="shadow two"></div>
         </div>
 
-        <div class="links">
+        <div class="links" id="links">
             <ul>
                 <li><a href="/">INICIO</a></li>
-                <li><a href="/calibracion">CALIBRACION</a></li>
+                <li><a href="/calibracion">CALIBRACIÓN</a></li>
                 <li><a href="/upload">SUBIR IMAGEN</a></li>
-                <li><a href="/deteccion">DETECCION</a></li>
-                <li><a href="#">ESTADISTICAS</a></li>
+                <li><a href="/deteccion">DETECCIÓN</a></li>
+                <li><a href="#">ESTADÍSTICAS</a></li>
             </ul>
         </div>
     </div>
 
+    <!-- Include Driver.js JavaScript via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const hamburgerMenu = document.querySelector(".hamburger-menu");
+            const container = document.querySelector(".container");
 
-<script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-    const hamburgerMenu = document.querySelector(".hamburger-menu");
-    const container = document.querySelector(".container");
-    const closeMenu = document.querySelector(".close-menu");
+            hamburgerMenu?.addEventListener("click", () => {
+                container?.classList.toggle("active");
+            });
 
-    hamburgerMenu?.addEventListener("click", () => {
-        container?.classList.toggle("active");
-    });
+            // Initialize Driver.js using lowercase 'driver'
+            const tourDriver = driver({
+                animate: true,
+                opacity: 0.75,
+                padding: 10,
+                showButtons: true,
+                doneBtnText: "Entendido",
+                closeBtnText: "Cerrar",
+                nextBtnText: "Siguiente",
+                prevBtnText: "Anterior",
+                popoverClass: 'custom-popover'
+            });
 
-    closeMenu?.addEventListener("click", () => {
-        container?.classList.remove("active");
-    });
-});
-</script>
+            // Define tour steps
+            tourDriver.defineSteps([
+                {
+                    element: '#menu',
+                    popover: {
+                        title: 'Menú Principal',
+                        description: 'Este es el menú principal de la aplicación.'
+                    }
+                },
+                {
+                    element: '#hamburger',
+                    popover: {
+                        title: 'Menú Hamburguesa',
+                        description: 'Haz clic aquí para abrir y cerrar el menú de navegación.'
+                    }
+                },
+                {
+                    element: '#logo',
+                    popover: {
+                        title: 'Logo de la Granja',
+                        description: 'Este es el logo de la Granja Santa Barbara.'
+                    }
+                },
+                {
+                    element: '#main',
+                    popover: {
+                        title: 'Aplicación de Detección de Inviabilidad',
+                        description: 'Aquí puedes encontrar información sobre la detección de inviabilidad en los huevos COBB 500.'
+                    }
+                },
+                {
+                    element: '#estadisticas',
+                    popover: {
+                        title: 'Estadísticas',
+                        description: 'Haz clic aquí para ver las estadísticas relacionadas con la detección de inviabilidad.'
+                    }
+                },
+                {
+                    element: '#links',
+                    popover: {
+                        title: 'Enlaces de Navegación',
+                        description: 'Estos enlaces permiten navegar entre las secciones de la aplicación.'
+                    }
+                }
+            ]);
+
+            // Start the Driver.js tour
+            tourDriver.start();
+        });
+    </script>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300&display=swap');
+    /* Importa el CSS de Driver.js directamente desde node_modules */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300&display=swap');
 
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
 
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
+    html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
 
-html, body{
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
-}
-
-a {
-    text-decoration: none;
-    color: #fff;
-}
+    a {
+        text-decoration: none;
+        color: #fff;
+    }
 
 .container{
     min-height: 100vh;
@@ -374,4 +450,7 @@ ul{
                 scale(.5)
     ;
 }
+
+.driver-active .driver-overlay,.driver-active *{pointer-events:none}.driver-active .driver-active-element,.driver-active .driver-active-element *,.driver-popover,.driver-popover *{pointer-events:auto}@keyframes animate-fade-in{0%{opacity:0}to{opacity:1}}.driver-fade .driver-overlay{animation:animate-fade-in .2s ease-in-out}.driver-fade .driver-popover{animation:animate-fade-in .2s}.driver-popover{all:unset;box-sizing:border-box;color:#2d2d2d;margin:0;padding:15px;border-radius:5px;min-width:250px;max-width:300px;box-shadow:0 1px 10px #0006;z-index:1000000000;position:fixed;top:0;right:0;background-color:#fff}.driver-popover *{font-family:Helvetica Neue,Inter,ui-sans-serif,"Apple Color Emoji",Helvetica,Arial,sans-serif}.driver-popover-title{font:19px/normal sans-serif;font-weight:700;display:block;position:relative;line-height:1.5;zoom:1;margin:0}.driver-popover-close-btn{all:unset;position:absolute;top:0;right:0;width:32px;height:28px;cursor:pointer;font-size:18px;font-weight:500;color:#d2d2d2;z-index:1;text-align:center;transition:color;transition-duration:.2s}.driver-popover-close-btn:hover,.driver-popover-close-btn:focus{color:#2d2d2d}.driver-popover-title[style*=block]+.driver-popover-description{margin-top:5px}.driver-popover-description{margin-bottom:0;font:14px/normal sans-serif;line-height:1.5;font-weight:400;zoom:1}.driver-popover-footer{margin-top:15px;text-align:right;zoom:1;display:flex;align-items:center;justify-content:space-between}.driver-popover-progress-text{font-size:13px;font-weight:400;color:#727272;zoom:1}.driver-popover-footer button{all:unset;display:inline-block;box-sizing:border-box;padding:3px 7px;text-decoration:none;text-shadow:1px 1px 0 #fff;background-color:#fff;color:#2d2d2d;font:12px/normal sans-serif;cursor:pointer;outline:0;zoom:1;line-height:1.3;border:1px solid #ccc;border-radius:3px}.driver-popover-footer .driver-popover-btn-disabled{opacity:.5;pointer-events:none}:not(body):has(>.driver-active-element){overflow:hidden!important}.driver-no-interaction,.driver-no-interaction *{pointer-events:none!important}.driver-popover-footer button:hover,.driver-popover-footer button:focus{background-color:#f7f7f7}.driver-popover-navigation-btns{display:flex;flex-grow:1;justify-content:flex-end}.driver-popover-navigation-btns button+button{margin-left:4px}.driver-popover-arrow{content:"";position:absolute;border:5px solid #fff}.driver-popover-arrow-side-over{display:none}.driver-popover-arrow-side-left{left:100%;border-right-color:transparent;border-bottom-color:transparent;border-top-color:transparent}.driver-popover-arrow-side-right{right:100%;border-left-color:transparent;border-bottom-color:transparent;border-top-color:transparent}.driver-popover-arrow-side-top{top:100%;border-right-color:transparent;border-bottom-color:transparent;border-left-color:transparent}.driver-popover-arrow-side-bottom{bottom:100%;border-left-color:transparent;border-top-color:transparent;border-right-color:transparent}.driver-popover-arrow-side-center{display:none}.driver-popover-arrow-side-left.driver-popover-arrow-align-start,.driver-popover-arrow-side-right.driver-popover-arrow-align-start{top:15px}.driver-popover-arrow-side-top.driver-popover-arrow-align-start,.driver-popover-arrow-side-bottom.driver-popover-arrow-align-start{left:15px}.driver-popover-arrow-align-end.driver-popover-arrow-side-left,.driver-popover-arrow-align-end.driver-popover-arrow-side-right{bottom:15px}.driver-popover-arrow-side-top.driver-popover-arrow-align-end,.driver-popover-arrow-side-bottom.driver-popover-arrow-align-end{right:15px}.driver-popover-arrow-side-left.driver-popover-arrow-align-center,.driver-popover-arrow-side-right.driver-popover-arrow-align-center{top:50%;margin-top:-5px}.driver-popover-arrow-side-top.driver-popover-arrow-align-center,.driver-popover-arrow-side-bottom.driver-popover-arrow-align-center{left:50%;margin-left:-5px}.driver-popover-arrow-none{display:none}
+
 </style> 
