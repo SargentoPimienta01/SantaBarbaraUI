@@ -1,0 +1,89 @@
+/* Resalta el contenedor del tour y agrega sombra */
+.shepherd-element {
+    position: relative;
+    z-index: 9999;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6); /* Sombra para destacar */
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo semitransparente */
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #29b546;
+}
+
+/* Ajuste para margen interno del contenido en el tooltip */
+.shepherd-tooltip-padding {
+    padding: 20px; /* Espacio adicional alrededor del contenido del tooltip */
+}
+
+.shepherd-content {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Títulos dentro del tour */
+.shepherd-content h4 {
+    font-size: 1.25rem;
+    color: #217c24; /* Color más oscuro para el título */
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Texto de los párrafos */
+.shepherd-content p {
+    color: #333;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Botones del tour */
+.shepherd-button {
+    background-color: #29b546;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.shepherd-button:hover {
+    background-color: #218f35; /* Color al hacer hover */
+}
+
+.shepherd-button.shepherd-cancel-icon {
+    color: #999;
+    font-size: 1.2rem;
+}
+
+.shepherd-button.shepherd-cancel-icon:hover {
+    color: #333;
+}
+
+/* Efecto de enfoque (highlight) para elementos referenciados */
+.shepherd-element-highlight {
+    outline: 3px solid rgba(41, 181, 70, 0.8); /* Borde de enfoque */
+    transition: outline 0.3s ease-in-out;
+}
+
+/* Estilo para el fondo opaco alrededor del elemento */
+.shepherd-overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro para enfocar el elemento */
+}
+
+/* Espacio adicional para la flecha del tooltip */
+.shepherd-arrow {
+    margin-top: 10px; /* Ajusta este valor para dar más espacio entre el tooltip y el elemento */
+}
+
+/* Efecto de transición para suavizar la aparición */
+.shepherd-element, .shepherd-overlay {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
