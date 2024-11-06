@@ -1,0 +1,125 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Inicio">
+<body>
+    <main class="splash-container">
+        <div class="splash-content">
+            <h1 class="splash-title">Bienvenido a Granja Santa Barbara</h1>
+            <p class="splash-description">Una solución innovadora para la detección avanzada de inviabilidad en la incubación de aves. Explora y mejora cada paso en el proceso de incubación.</p>
+            <button class="splash-button" onclick="startApp()">Entrar</button>
+        </div>
+        <div class="splash-background"></div>
+    </main>
+</Layout>
+
+    <script>
+        function startApp() {
+            document.querySelector(".splash-container")?.classList.add("fade-out");
+            setTimeout(() => {
+                window.location.href = "/menu"; // Redirige al menú principal
+            }, 800); // Tiempo suficiente para la animación de salida
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .splash-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #217c24;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.8s ease;
+        }
+
+        .splash-container.fade-out {
+            opacity: 0;
+        }
+
+        .splash-content {
+            text-align: center;
+            z-index: 2;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        .splash-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .splash-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #e1e1e1;
+        }
+
+        .splash-button {
+            background-color: #29b546;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .splash-button:hover {
+            background-color: #218f35;
+        }
+
+        .splash-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #217c24 40%, #0b4e0c);
+            z-index: 1;
+            opacity: 0.85;
+            animation: slideBackground 4s ease infinite;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideBackground {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-10%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</body>
+</html>

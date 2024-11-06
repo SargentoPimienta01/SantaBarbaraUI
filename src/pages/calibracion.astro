@@ -6,17 +6,19 @@ import CameraCalibration from '../components/Calibrations.jsx';
     <div class="calibracion-container">
         <CameraCalibration client:load/>
     </div>
+
+    <style>
+        .calibracion-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(90deg, #217c24 0%, #0b4e0c 100%);
+            color: #fff;
+            font-family: "Poppins", sans-serif;
+        }
+        </style>
 </Layout>
 
-<style>
-.calibracion-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(90deg, #217c24 0%, #0b4e0c 100%);
-    color: #fff;
-    font-family: "Poppins", sans-serif;
-}
-</style>
+

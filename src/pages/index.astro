@@ -11,7 +11,7 @@ import TourGuide from "../components/Tour"
     <link rel="stylesheet" href="/src/css/viewTransition.css">
 </head>
 <body class="fade-in">
-    <main id="main-content" class="fade-in">
+    <main id="main-content">
     
     <div class="container">
         <div class="navbar">
@@ -45,16 +45,16 @@ import TourGuide from "../components/Tour"
 
         <div class="links" id="links">
             <ul>
-                <li><a href="/">INICIO</a></li>
-                <li><a href="/calibracion">CALIBRACIÓN</a></li>
-                <li><a href="/upload">SUBIR IMAGEN</a></li>
-                <li><a href="/deteccion">DETECCIÓN</a></li>
-                <li><a href="#">ESTADÍSTICAS</a></li>
+                <li><a href="/" class="fade-out">INICIO</a></li>
+                <li><a href="/calibracion" class="fade-out">CALIBRACIÓN</a></li>
+                <li><a href="/upload" class="fade-out">SUBIR IMAGEN</a></li>
+                <li><a href="/deteccion" class="fade-out">DETECCIÓN</a></li>
+                <li><a href="#" class="fade-out">ESTADÍSTICAS</a></li>
             </ul>
         </div>
     </div>
     <TourGuide client:load></TourGuide>
-
+    </main>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const hamburgerMenu = document.querySelector(".hamburger-menu");
@@ -65,22 +65,16 @@ import TourGuide from "../components/Tour"
             });
         })
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const links = document.querySelectorAll('a');
-            links.forEach(link => {
-                link.addEventListener('click', (event) => {
-                    // Evita la navegación inmediata
-                    event.preventDefault();
-                    // Agrega la clase de salida
-                    document.body.classList.add('fade-out');
-                    
-                    // Redirige después de la animación
-                    setTimeout(() => {
-                        window.location.href = link.href;
-                    }, 500); // Tiempo que coincida con la duración de fadeOut
+        document.addEventListener("DOMContentLoaded", function () {
+            const links = document.querySelectorAll("a");
+            links.forEach((link) => {
+                link.addEventListener("click", (e) => {
+                    document.getElementById("main-content")?.classList.add("fade-out");
                 });
             });
         });
+
+        localStorage.setItem('isIndexPage', 'true');
     </script>
 
 <style>
@@ -389,5 +383,4 @@ ul{
     ;
 }
 </style> 
-</main>
 </body>
