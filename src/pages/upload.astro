@@ -2,19 +2,31 @@
 import Layout from '../layouts/Layout.astro';
 import ImageUploader from '../components/UploadImagen.jsx';
 
+import '../css/global.css';
+
 const title = "Carga y Previsualización de Imágenes";
 const description = "Sube tus imágenes para ver una previsualización y administrar la carga.";
 --- 
 
 <Layout title={title}>
-<div class="w-full flex flex-col items-center py-10 bg-gradient-to-b from-blue-50 to-gray-100 min-h-screen">
-    <h1 class="text-3xl font-bold text-gray-800 mb-4">{title}</h1>
-    <p class="text-gray-600 text-center mb-8">{description}</p>
+    <link rel="stylesheet" href="/src/css/global.css">
+    <div class="global-container" class="w-full flex flex-col items-center py-10 bg-gradient-to-b from-blue-50 to-gray-100 min-h-screen">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">{title}</h1>
+        <p class="text-gray-600 text-center mb-8">{description}</p>
 
     <ImageUploader client:load />
 </div>
 </Layout>
 
 <style>
-    /* Agrega estilos personalizados si es necesario */
+    .upload-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: linear-gradient(90deg, #217c24 0%, #0b4e0c 100%);
+        color: #fff;
+        font-family: "Poppins", sans-serif;
+    }
 </style>

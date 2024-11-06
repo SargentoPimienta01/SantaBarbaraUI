@@ -3,7 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import CameraCalibration from '../components/Calibrations.jsx';
 ---
 <Layout title='Calibración de la Camara'>
-    <div class="calibracion-container">
+    <link rel="stylesheet" href="/src/css/global.css">
+    <div class="global-container">
         <CameraCalibration client:load/>
     </div>
 
