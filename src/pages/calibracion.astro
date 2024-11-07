@@ -4,22 +4,13 @@ import CameraCalibration from '../components/Calibrations.jsx';
 ---
 <Layout title='Calibración de la Camara'>
     <link rel="stylesheet" href="/src/css/global.css">
-    <div class="global-container">
+    <link rel="stylesheet" href="/src/css/calibration.css">
+    <div class="calibration-container">
         <CameraCalibration client:load/>
     </div>
 
-    <style>
-        .calibracion-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background: linear-gradient(90deg, #217c24 0%, #0b4e0c 100%);
-            color: #fff;
-            font-family: "Poppins", sans-serif;
-        }
-        </style>
+    <script src="https://cdn.jsdelivr.net/npm/tracking/build/tracking-min.js"></script>
+
 </Layout>
 
 

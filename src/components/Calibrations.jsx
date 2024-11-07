@@ -1,88 +1,167 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import * as tf from '@tensorflow/tfjs';
 
-const CameraCalibration = () => {
-    const [cameraAvailable, setCameraAvailable] = useState(false);
-    const [capturedImage, setCapturedImage] = useState(null);
-    const [deviceType, setDeviceType] = useState("computadora"); // Estado para el tipo de dispositivo
-    const videoRef = useRef(null);
-    const canvasRef = useRef(null);
+const CalibracionComponente = () => {
+  const [diferenciaColor, setDiferenciaColor] = useState(null);
+  const [cargando, setCargando] = useState(false);
+  const [progreso, setProgreso] = useState(0);
+  const [error, setError] = useState(null);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const referenciaImgRef = useRef(null);
 
-    // Verifica si hay una cámara disponible y define el tipo de dispositivo
-    useEffect(() => {
-        navigator.mediaDevices.enumerateDevices()
-            .then(devices => {
-                const videoDevices = devices.filter(device => device.kind === 'videoinput');
-                setCameraAvailable(videoDevices.length > 0);
+  useEffect(() => {
+    iniciarCamara();
+  }, []);
 
-                // Si hay más de una cámara, asumimos que la segunda es externa
-                if (videoDevices.length > 1) {
-                    setDeviceType("dispositivo móvil conectado");
-                } else if (videoDevices.length === 1) {
-                    setDeviceType("computadora");
-                }
-            })
-            .catch(error => console.error("Error al verificar dispositivos:", error));
-    }, []);
+  const iniciarCamara = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      setError(null);
+    } catch (err) {
+      console.error("Error al iniciar la cámara:", err);
+      setError("No se pudo iniciar la cámara. Verifica los permisos.");
+    }
+  };
 
-    // Inicia la cámara si está disponible
-    useEffect(() => {
-        if (cameraAvailable) {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => {
-                    videoRef.current.srcObject = stream;
-                })
-                .catch(error => console.error("Error al acceder a la cámara:", error));
-        }
-    }, [cameraAvailable]);
+  const capturarImagen = () => {
+    if (videoRef.current && canvasRef.current) {
+      setCargando(true);
+      setProgreso(25);
 
-    const captureImage = () => {
-        const context = canvasRef.current.getContext('2d');
-        canvasRef.current.width = videoRef.current.videoWidth;
-        canvasRef.current.height = videoRef.current.videoHeight;
-        context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
-        const imageData = canvasRef.current.toDataURL('image/png');
-        setCapturedImage(imageData);
-        // Aquí puedes realizar la comparación de color con la imagen de referencia
-        calibrateColor(context.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height));
+      const canvas = canvasRef.current;
+      const video = videoRef.current;
+
+      // Ajusta el tamaño del canvas al tamaño del video
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      setProgreso(50);
+
+      // Realizar análisis de color promedio con TensorFlow.js
+      analizarColorConTensorFlow(canvas);
+    }
+  };
+
+  const analizarColorConTensorFlow = async (canvas) => {
+    try {
+      const colorPromedio = await obtenerColorPromedioConTensorFlow(canvas);
+      console.log("Color promedio detectado en TensorFlow:", colorPromedio);
+
+      // Calcula la diferencia con el círculo cromático de referencia
+      const referenciaColor = obtenerColorPromedio(referenciaImgRef.current);
+      const diferencia = calcularDiferenciaColor(referenciaColor, colorPromedio);
+      setDiferenciaColor(diferencia ? diferencia.toFixed(2) : 'Sin resultado');
+      setProgreso(100);
+    } catch (error) {
+      console.error("Error en el análisis de color con TensorFlow:", error);
+      setError("Error en el análisis de color.");
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const obtenerColorPromedioConTensorFlow = async (canvas) => {
+    // Convertimos el canvas a un tensor
+    const tensor = tf.browser.fromPixels(canvas);
+    const resizedTensor = tf.image.resizeBilinear(tensor, [100, 100]); // Redimensiona para reducir carga
+    const meanTensor = resizedTensor.mean([0, 1]); // Calcula el promedio en los canales RGB
+
+    const [r, g, b] = await meanTensor.data(); // Extrae los valores RGB promedio
+    tensor.dispose();
+    resizedTensor.dispose();
+    meanTensor.dispose();
+
+    return { r: Math.round(r), g: Math.round(g), b: Math.round(b) };
+  };
+
+  const obtenerColorPromedio = (elemento) => {
+    const ctx = elemento.getContext('2d');
+    const data = ctx.getImageData(0, 0, elemento.width, elemento.height).data;
+    let r = 0, g = 0, b = 0;
+    const step = 32; // Procesar un subconjunto de píxeles para mejorar el rendimiento
+    const length = data.length;
+
+    for (let i = 0; i < length; i += step * 4) {
+      r += data[i];
+      g += data[i + 1];
+      b += data[i + 2];
+    }
+
+    const numPixels = length / (step * 4);
+    return {
+      r: Math.round(r / numPixels),
+      g: Math.round(g / numPixels),
+      b: Math.round(b / numPixels)
     };
+  };
 
-    const calibrateColor = (imageData) => {
-        // Implementación para analizar y calibrar el color
-        console.log("Iniciando calibración de color...");
-        // Aquí iría el código de comparación con la referencia de color
-    };
+  const calcularDiferenciaColor = (color1, color2) => {
+    if (!color1 || !color2) return NaN;
+    return Math.abs(color1.r - color2.r) + Math.abs(color1.g - color2.g) + Math.abs(color1.b - color2.b);
+  };
 
-    return (
-        <div className="calibration-container flex flex-col items-center gap-4 p-6 bg-white shadow-lg rounded-lg border border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Calibración de la Cámara</h2>
-            <p className="text-sm text-gray-600 mb-2">
-                Calibración en curso utilizando la cámara de {deviceType}.
-            </p>
-
-            {cameraAvailable ? (
-                <>
-                    <video ref={videoRef} autoPlay className="rounded-lg shadow-md max-w-full h-auto" style={{ maxWidth: '500px' }}></video>
-                    <button 
-                        onClick={captureImage} 
-                        className="capture-button mt-4 px-6 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white font-semibold rounded-full shadow-md hover:from-green-600 hover:to-teal-600 transition duration-300"
-                    >
-                        Capturar Imagen para Calibración
-                    </button>
-                    <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-                    {capturedImage && (
-                        <div className="captured-image mt-6">
-                            <h3 className="text-lg font-semibold text-gray-700">Imagen Capturada:</h3>
-                            <img src={capturedImage} alt="Imagen capturada" className="rounded-lg shadow-md mt-2 max-w-full h-auto" />
-                        </div>
-                    )}
-                </>
-            ) : (
-                <p className="text-gray-600 mt-4">
-                    No se detectó una cámara. Conecta una cámara externa para calibrar.
-                </p>
-            )}
+  return (
+    <div className='app-container'>
+        <div className="nb-introduction">
+            <h1 className="nb-title">Componente de Calibración de Imagen</h1>
         </div>
-    );
+        <div className="nb-container">
+            <p className="nb-description">La calibración de la cámara es esencial para garantizar la precisión y la fiabilidad en los resultados que obtienes. 
+            Sin una calibración adecuada, los colores y detalles capturados pueden variar, lo que afecta la calidad y la exactitud de tus análisis.
+            </p>
+            <div className="nb-calibracion">
+                <div className="nb-flex">
+                    <div className="card">
+                        <video ref={videoRef} autoPlay playsInline className="nb-video"></video>
+                    </div>
+                    <div className="card">
+                        <img
+                        ref={referenciaImgRef}
+                        src="/images/circulo.webp"
+                        alt="Círculo Cromático"
+                        className="nb-image"
+                        />
+                    </div>
+                </div>
+
+                <button
+                    onClick={capturarImagen}
+                    className={`nb-button orange ${cargando ? 'disabled' : ''}`}
+                    disabled={cargando}
+                >
+                    {cargando ? 'Capturando...' : 'Calibrar Camara'}
+                </button>
+
+                {/* Barra de Progreso */}
+                {cargando && (
+                    <div className="nb-progress-bar">
+                    <div className="nb-progress" style={{ width: `${progreso}%` }}>
+                        {progreso}%
+                    </div>
+                    </div>
+                )}
+
+                {diferenciaColor && (
+                    <p className="nb-result">
+                    Diferencia de color promedio: {diferenciaColor}
+                    </p>
+                )}
+
+                {error && (
+                    <p className="nb-error">
+                    {error}
+                    </p>
+                )}
+            </div>
+        </div>
+    </div>
+  );
 };
 
-export default CameraCalibration;
+export default CalibracionComponente;
