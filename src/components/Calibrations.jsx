@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
+import TourGuide from './TourCalibracion';
 
 const CalibracionComponente = () => {
   const [diferenciaColor, setDiferenciaColor] = useState(null);
@@ -108,6 +109,7 @@ const CalibracionComponente = () => {
 
   return (
     <div className='app-container'>
+        <TourGuide />
         <div className="nb-introduction">
             <h1 className="nb-title">Componente de Calibración de Imagen</h1>
         </div>
