@@ -109,7 +109,15 @@ const ImageDetection = () => {
 
                 <input className="nb-input blue" placeholder="Maple" id="maple-input"/>
             </div>
-            
+
+            <div className="maple-grid-container">
+                <h2>Maple de Huevos (10 x 15)</h2>
+                <div className="maple-grid">
+                    {Array.from({ length: 150 }).map((_, index) => (
+                        <div key={index} className="egg-slot"></div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };
