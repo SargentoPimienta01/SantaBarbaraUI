@@ -56,7 +56,7 @@ const ImageUploader = () => {
     return (
         <div className="image-upload-container" id="image-upload-container">
             <TourGuide />
-            <div className="marquee bg-white">
+            <div className="marquee bg-white h-24 content-center">
                 <div className="marquee-content">
                     <span>Coman</span>
                     <span>Mas</span>
@@ -140,6 +140,15 @@ const ImageUploader = () => {
             
             <div className="nb-deteccion">
                 <button className="nb-button default" id="detection-button"> Hacer Deteccion </button>
+            </div>
+
+            <div className="maple-grid-container">
+                <h2>Maple de Huevos (10 x 15)</h2>
+                <div className="maple-grid">
+                    {Array.from({ length: 150 }).map((_, index) => (
+                        <div key={index} className="egg-slot"></div>
+                    ))}
+                </div>
             </div>
 
         </div>
