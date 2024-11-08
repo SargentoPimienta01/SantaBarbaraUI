@@ -71,8 +71,16 @@ const ImageUploader = () => {
             <div className="nb-header">
                 <h1 className="nb-title">Carga y Previsualización de Imágenes</h1>
                 <div div className="nb-datos">
-                    <input className="nb-input blue" placeholder="Incubadora" />
-                    <input className="nb-input blue" placeholder="Maple" />
+                    <select class="dropdown">
+                        <option value="">Seleccione la incubadora</option>
+                        <option value="option1">1</option>
+                        <option value="option2">2</option>
+                        <option value="option3">3</option>
+                        <option value="option4">4</option>
+                        <option value="option5">5</option>
+                        <option value="option6">6</option>
+                    </select>
+                    <input className="nb-input default" placeholder="Maple" />
                 </div>
             </div>
 
@@ -91,7 +99,7 @@ const ImageUploader = () => {
                                 
                                 <label
                                     htmlFor="file-upload"
-                                    className="mt-2 inline-block bg-gradient-to-r from-blue-600 to-blue-500 text-white py-2 px-4 rounded cursor-pointer shadow-lg transition hover:from-blue-700 hover:to-blue-600"
+                                    className="nb-button blue"
                                 >
                                     Selecciona una imagen
                                 </label>
@@ -108,11 +116,11 @@ const ImageUploader = () => {
                                 <img
                                     src={selectedImage}
                                     alt="Vista previa de la imagen cargada"
-                                    className="mt-4 w-full h-auto rounded-lg shadow-lg border"
+                                    className="nb-image-preview"
                                 />
                                 <button
                                     onClick={handleRemoveImage}
-                                    className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 shadow-lg transition-colors duration-200"
+                                    className="nb-button orange"
                                 >
                                     Eliminar
                                 </button>
@@ -126,8 +134,11 @@ const ImageUploader = () => {
                 es una variedad que, con un manejo adecuado, tiende a tener tasas elevadas de fertilidad y crecimiento, pero también puede presentar ciertos desafíos de viabilidad que es crucial identificar a tiempo para asegurar la calidad en la incubación.
                 Al completar este proceso, el sistema genera un análisis que muestra el porcentaje de inviabilidad de cada huevo basado en su color, textura, y otros factores internos detectados en la imagen. Este resultado te permite tomar decisiones informadas y proactivas sobre el manejo de los huevos y su potencial para incubación.</p>
             </div>
-
             
+            <div className="nb-deteccion">
+                <button class="nb-button default"> Hacer Deteccion </button>
+            </div>
+
         </div>
     );
 };

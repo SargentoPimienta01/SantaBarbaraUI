@@ -744,25 +744,37 @@ input.nb-checkbox {
   max-height: 100vh;
   padding: 1em; }
 
-.dropdown {
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 2px 2px 0px black;
-  border: 1px solid black;
-  padding: 10px;
-  cursor: pointer; }
+ /* Dropdown */
+
+ .dropdown {
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 2px 2px 0px black;
+    border: 1px solid black;
+    padding: 10px;
+    cursor: pointer;
+    position: relative; /* Se agregó para que el ::after se posicione correctamente */
+  }
+  
   .dropdown::after {
     content: '\25BC';
     position: absolute;
     top: 50%;
     right: 10px;
-    transform: translateY(-50%); }
-  .dropdown option {
+    transform: translateY(-50%);
+  }
+  
+  .dropdown select { 
     background-color: #fff;
     color: #333;
     box-shadow: 2px 2px 0px black;
     border: 1px solid black;
-    padding: 10px; }
-  .dropdown:focus {
+    padding: 10px;
+    appearance: none; 
+    width: 100%; 
+  }
+  
+  .dropdown:focus-within { 
     outline: none;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
