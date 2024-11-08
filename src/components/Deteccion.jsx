@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import ImageDetectionTour from './TourDeteccion';
 
 const ImageDetection = () => {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -62,6 +63,7 @@ const ImageDetection = () => {
 
     return (
         <div className="">
+            <ImageDetectionTour />
             <div className="nb-bagde-container">
                 <div className="nb-tri-badge">
                     <div class="badge bg-blue text-white">

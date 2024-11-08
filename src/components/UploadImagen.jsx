@@ -72,7 +72,7 @@ const ImageUploader = () => {
             <div className="nb-header">
                 <h1 className="nb-title" id="upload-title">Carga y Previsualización de Imágenes</h1>
                 <div div className="nb-datos">
-                    <select class="dropdown" id="incubator-select">
+                    <select className="dropdown" id="incubator-select">
                         <option value="">Seleccione la incubadora</option>
                         <option value="option1">1</option>
                         <option value="option2">2</option>
@@ -139,7 +139,7 @@ const ImageUploader = () => {
             </div>
             
             <div className="nb-deteccion">
-                <button class="nb-button default" id="detection-button"> Hacer Deteccion </button>
+                <button className="nb-button default" id="detection-button"> Hacer Deteccion </button>
             </div>
 
         </div>
