@@ -1,7 +1,7 @@
-// src/components/ImageUploader.jsx
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import TourGuide from './TourUpload';
 
 const ImageUploader = () => {
     const [isDragging, setIsDragging] = useState(false);
@@ -54,7 +54,8 @@ const ImageUploader = () => {
     };
 
     return (
-        <div className="image-upload-container">
+        <div className="image-upload-container" id="image-upload-container">
+            <TourGuide />
             <div className="marquee bg-white">
                 <div className="marquee-content">
                     <span>Coman</span>
@@ -69,9 +70,9 @@ const ImageUploader = () => {
                 </div>
             </div>
             <div className="nb-header">
-                <h1 className="nb-title">Carga y Previsualización de Imágenes</h1>
+                <h1 className="nb-title" id="upload-title">Carga y Previsualización de Imágenes</h1>
                 <div div className="nb-datos">
-                    <select class="dropdown">
+                    <select class="dropdown" id="incubator-select">
                         <option value="">Seleccione la incubadora</option>
                         <option value="option1">1</option>
                         <option value="option2">2</option>
@@ -80,12 +81,12 @@ const ImageUploader = () => {
                         <option value="option5">5</option>
                         <option value="option6">6</option>
                     </select>
-                    <input className="nb-input default" placeholder="Maple" />
+                    <input className="nb-input default" placeholder="Maple" id="maple-input"/>
                 </div>
             </div>
 
             <div className="nb-carga">
-                <div className="relative flex justify-center items-center flex-col gap-4 w-full max-w-md mx-auto p-6 border-2 border-dashed border-gray-400 rounded-lg transition-colors duration-300 ease-in-out hover:border-blue-500 bg-white shadow-md">
+                <div id="upload-area" className="relative flex justify-center items-center flex-col gap-4 w-full max-w-md mx-auto p-6 border-2 border-dashed border-gray-400 rounded-lg transition-colors duration-300 ease-in-out hover:border-blue-500 bg-white shadow-md">
                     <div
                         className={`upload-area w-full p-6 text-center rounded-lg transition ${
                             isDragging ? 'bg-blue-100 border-blue-500' : ''
@@ -100,11 +101,13 @@ const ImageUploader = () => {
                                 <label
                                     htmlFor="file-upload"
                                     className="nb-button blue"
+                                    id="file-upload"
+
                                 >
                                     Selecciona una imagen
                                 </label>
                                 <input
-                                    id="file-upload"
+                                    
                                     type="file"
                                     accept="image/*"
                                     onChange={handleFileChange}
@@ -136,7 +139,7 @@ const ImageUploader = () => {
             </div>
             
             <div className="nb-deteccion">
-                <button class="nb-button default"> Hacer Deteccion </button>
+                <button class="nb-button default" id="detection-button"> Hacer Deteccion </button>
             </div>
 
         </div>
