@@ -67,7 +67,7 @@ body {
   
   /* Botón azul */
   .nb-button.blue {
-    background-color: #0077b6;
+    background-color: #2E4A9E;
   }
   .nb-button.blue:hover:not(.disabled),
   .nb-button.blue:focus:not(.disabled) {
@@ -222,7 +222,7 @@ body {
   }
   
   .nb-input.blue {
-    background-color: #0077b6;
+    background-color: #2E4A9E;
     color: white;
   }
   .nb-input.blue:hover {
@@ -438,7 +438,7 @@ body {
   background-color: #ff5733; }
 
 .bg-blue {
-  background-color: #0077b6; }
+  background-color: #2E4A9E; }
 
 .bg-green {
   background-color: #40d39c; }
