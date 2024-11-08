@@ -1,4 +1,3 @@
-// src/components/ImageDetection.jsx
 import React, { useState, useRef } from 'react';
 
 const ImageDetection = () => {
@@ -62,36 +61,55 @@ const ImageDetection = () => {
     };
 
     return (
-        <div className="detection-module flex flex-col items-center gap-4 p-6 border rounded-lg">
-            <h2 className="text-2xl font-bold">Detección de Imagen</h2>
+        <div className="">
+            <div className="nb-bagde-container">
+                <div className="nb-tri-badge">
+                    <div class="badge bg-blue text-white">
+                        <div class="badge-inner">
+                            <p class="badge-text">Granja</p>
+                        </div>
+                    </div>
 
-            <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="file-input mt-4"
-            />
-            
-            {selectedImage && (
-                <>
-                    <img src={selectedImage} alt="Imagen seleccionada" className="w-full h-auto rounded mt-4" />
-                    <button onClick={analyzeImage} className="analyze-button bg-blue-600 text-white py-2 px-4 rounded mt-4">
-                        Analizar Imagen
-                    </button>
-                </>
-            )}
+                    <div class="badge bg-blue text-white">
+                        <div class="badge-inner">
+                            <p class="badge-text">Santa</p>
+                        </div>
+                    </div>
 
-            <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-
-            {analysisResult && (
-                <div className="result mt-4 p-4 bg-gray-100 rounded">
-                    <h3 className="text-xl">Resultados del Análisis</h3>
-                    <p>Color Dominante: {analysisResult.dominantColor}</p>
-                    <p>Rojos: {analysisResult.redCount}</p>
-                    <p>Verdes: {analysisResult.greenCount}</p>
-                    <p>Azules: {analysisResult.blueCount}</p>
+                    <div class="badge bg-blue text-white">
+                        <div class="badge-inner">
+                            <p class="badge-text">Barbara</p>
+                        </div>
+                    </div>
                 </div>
-            )}
+            </div>
+
+            <div className="nb-title-container">
+                <h1 className="nb-title">Detección de Inviabilidad</h1>
+            </div>
+
+            <div className="cuerpo-container">
+                <select class="dropdown bg-blue" id="incubator-select">
+                    <option value="">Seleccione la incubadora</option>
+                    <option value="option1">1</option>
+                    <option value="option2">2</option>
+                    <option value="option3">3</option>
+                    <option value="option4">4</option>
+                    <option value="option5">5</option>
+                    <option value="option6">6</option>
+                </select>
+
+                <div className="nb-video">
+                <div className="card">
+                    <video autoPlay playsInline className='nb-video-s'></video>
+                </div>
+
+                <button class="nb-button blue" id="detection-button"> Hacer Deteccion </button>
+                </div>
+
+                <input className="nb-input blue" placeholder="Maple" id="maple-input"/>
+            </div>
+            
         </div>
     );
 };

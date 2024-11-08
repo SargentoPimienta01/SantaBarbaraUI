@@ -600,23 +600,30 @@ input.nb-checkbox {
       font-size: 18px;
       text-align: center; }
 
-.badge {
+ /* Badge */
+
+ .badge {
   width: fit-content;
   padding: 5px;
   border: 2px solid #000;
   border-radius: 50px;
-  box-shadow: 3px 3px 0 0 #000; }
-  .badge .badge-inner {
-    display: flex;
-    height: 100%;
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #000;
-    border-radius: 50px; }
-    .badge .badge-inner .badge-text {
-      padding: 10px;
-      margin: 0; }
+  box-shadow: 3px 3px 0 0 #000;
+}
+
+.badge .badge-inner {
+  display: flex;
+  height: 100%;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #000;
+  border-radius: 50px;
+}
+
+.badge .badge-inner .badge-text {
+  padding: 10px;
+  margin: 0;
+}
 
 #modal {
   display: none; }
