@@ -1,0 +1,39 @@
+.upload-container{
+    background: #0077b6;
+    width: 100%;
+}
+
+.nb-header{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.nb-datos{
+    display: flex; /* Hacemos nb-datos un contenedor flex para controlar el espacio entre inputs */
+    gap: 200px;
+    margin-top: 20px;
+}
+.nb-title{
+    color: #000;
+    font-size: 3rem;
+    font-weight: bold;
+    max-width: 800px;
+    padding-left: 10px;
+}
+
+.nb-carga {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.nb-texto {
+    flex: 1;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 700px;
+}
