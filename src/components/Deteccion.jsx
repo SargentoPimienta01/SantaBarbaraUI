@@ -66,21 +66,21 @@ const ImageDetection = () => {
             <ImageDetectionTour />
             <div className="nb-bagde-container">
                 <div className="nb-tri-badge">
-                    <div class="badge bg-blue text-white">
-                        <div class="badge-inner">
-                            <p class="badge-text">Granja</p>
+                    <div className="badge bg-blue text-white">
+                        <div className="badge-inner">
+                            <p className="badge-text">Granja</p>
                         </div>
                     </div>
 
-                    <div class="badge bg-blue text-white">
-                        <div class="badge-inner">
-                            <p class="badge-text">Santa</p>
+                    <div className="badge bg-blue text-white">
+                        <div className="badge-inner">
+                            <p className="badge-text">Santa</p>
                         </div>
                     </div>
 
-                    <div class="badge bg-blue text-white">
-                        <div class="badge-inner">
-                            <p class="badge-text">Barbara</p>
+                    <div className="badge bg-blue text-white">
+                        <div className="badge-inner">
+                            <p className="badge-text">Barbara</p>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ const ImageDetection = () => {
             </div>
 
             <div className="cuerpo-container">
-                <select class="dropdown bg-blue" id="incubator-select">
+                <select className="dropdown bg-blue" id="incubator-select">
                     <option value="">Seleccione la incubadora</option>
                     <option value="option1">1</option>
                     <option value="option2">2</option>
@@ -106,7 +106,7 @@ const ImageDetection = () => {
                     <video autoPlay playsInline className='nb-video-s'></video>
                 </div>
 
-                <button class="nb-button blue" id="detection-button"> Hacer Deteccion </button>
+                <button className="nb-button blue" id="detection-button"> Hacer Deteccion </button>
                 </div>
 
                 <input className="nb-input blue" placeholder="Maple" id="maple-input"/>

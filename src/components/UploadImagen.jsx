@@ -6,6 +6,7 @@ import TourGuide from './TourUpload';
 const ImageUploader = () => {
     const [isDragging, setIsDragging] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [mapleData, setMapleData] = useState(null);
     const MySwal = withReactContent(Swal);
 
     const showAlert = () => {
@@ -18,6 +19,63 @@ const ImageUploader = () => {
             background: '#fff',
             color: '#333',
         });
+    };
+
+    const uploadImageToApi = async () => {
+        const idIncubadora = document.getElementById("incubator-select").value;
+        const mapleSerial = document.getElementById("maple-input").value;
+
+        if (!selectedImage) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor, seleccione una imagen antes de iniciar la detección.',
+                icon: 'error',
+            });
+            return;
+        }
+        
+        if (!idIncubadora || !mapleSerial) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor, complete los campos de incubadora y serie del maple antes de continuar.',
+                icon: 'error',
+            });
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("id_incubadora", idIncubadora); // ID de la incubadora
+        formData.append("serial_maple", mapleSerial); // Serie del maple
+        formData.append("file", selectedImage); // Archivo de imagen
+
+        // Para depuración: verificar el contenido de formData
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/maple/procesar", {
+                method: "POST",
+                body: formData,
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setMapleData(data);
+                Swal.fire({
+                    title: 'Análisis Completo',
+                    text: 'El análisis de los huevos ha sido completado con éxito.',
+                    icon: 'success',
+                });
+            } else {
+                throw new Error('Error al procesar la imagen');
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Error',
+                text: error.message,
+                icon: 'error',
+            });
+        }
     };
 
     const handleDragOver = (e) => {
@@ -34,23 +92,22 @@ const ImageUploader = () => {
         setIsDragging(false);
         const file = e.dataTransfer.files[0];
         if (file && file.type.startsWith('image/')) {
-            const imageUrl = URL.createObjectURL(file);
-            setSelectedImage(imageUrl);
-            showAlert();  // Mostrar la alerta
+            setSelectedImage(file);
+            showAlert();
         }
     };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
-            const imageUrl = URL.createObjectURL(file);
-            setSelectedImage(imageUrl);
-            showAlert();  // Mostrar la alerta
+            setSelectedImage(file);
+            showAlert();
         }
     };
 
     const handleRemoveImage = () => {
         setSelectedImage(null);
+        setMapleData(null);
     };
 
     return (
@@ -71,17 +128,17 @@ const ImageUploader = () => {
             </div>
             <div className="nb-header">
                 <h1 className="nb-title" id="upload-title">Carga y Previsualización de Imágenes</h1>
-                <div div className="nb-datos">
+                <div className="nb-datos">
                     <select className="dropdown" id="incubator-select">
                         <option value="">Seleccione la incubadora</option>
-                        <option value="option1">1</option>
-                        <option value="option2">2</option>
-                        <option value="option3">3</option>
-                        <option value="option4">4</option>
-                        <option value="option5">5</option>
-                        <option value="option6">6</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
                     </select>
-                    <input className="nb-input default" placeholder="Maple" id="maple-input"/>
+                    <input className="nb-input default" placeholder="Maple" id="maple-input" />
                 </div>
             </div>
 
@@ -97,17 +154,14 @@ const ImageUploader = () => {
                     >
                         {!selectedImage ? (
                             <>
-                                
                                 <label
                                     htmlFor="file-upload"
                                     className="nb-button blue"
                                     id="file-upload"
-
                                 >
                                     Selecciona una imagen
                                 </label>
                                 <input
-                                    
                                     type="file"
                                     accept="image/*"
                                     onChange={handleFileChange}
@@ -117,7 +171,7 @@ const ImageUploader = () => {
                         ) : (
                             <div className="preview flex flex-col items-center">
                                 <img
-                                    src={selectedImage}
+                                    src={URL.createObjectURL(selectedImage)}
                                     alt="Vista previa de la imagen cargada"
                                     className="nb-image-preview"
                                 />
@@ -131,15 +185,13 @@ const ImageUploader = () => {
                         )}
                     </div>
                 </div>
-                <p className="nb-texto">Cuando subes una imagen de los huevos, estás iniciando un proceso avanzado que utiliza inteligencia artificial para evaluar su viabilidad. La tecnología detrás de este análisis combina dos redes neuronales diseñadas específicamente para interpretar los datos visuales de manera precisa y confiable.
-                Primero, la imagen pasa por una red neuronal convolucional encargada de preprocesar y segmentar cada huevo en la imagen. Esta etapa asegura que cada huevo sea detectado individualmente, independientemente de su posición o agrupación, y que los datos visuales relevantes se aíslen para un análisis efectivo.
-                A continuación, la imagen procesada pasa a una segunda red neuronal, especializada en analizar la colorimetría y otros factores visuales de cada huevo. Esta red está entrenada para reconocer patrones específicos en la variante de huevo Cobb 500, que es conocida por sus características de alta eficiencia en la industria avícola. La Cobb 500 
-                es una variedad que, con un manejo adecuado, tiende a tener tasas elevadas de fertilidad y crecimiento, pero también puede presentar ciertos desafíos de viabilidad que es crucial identificar a tiempo para asegurar la calidad en la incubación.
-                Al completar este proceso, el sistema genera un análisis que muestra el porcentaje de inviabilidad de cada huevo basado en su color, textura, y otros factores internos detectados en la imagen. Este resultado te permite tomar decisiones informadas y proactivas sobre el manejo de los huevos y su potencial para incubación.</p>
+                <p className="nb-texto">
+                    Cuando subes una imagen de los huevos, estás iniciando un proceso avanzado que utiliza inteligencia artificial para evaluar su viabilidad...
+                </p>
             </div>
-            
+
             <div className="nb-deteccion">
-                <button className="nb-button default" id="detection-button"> Hacer Deteccion </button>
+                <button onClick={uploadImageToApi} className="nb-button default" id="detection-button">Hacer Deteccion</button>
             </div>
 
             <div className="maple-grid-container">
@@ -150,7 +202,6 @@ const ImageUploader = () => {
                     ))}
                 </div>
             </div>
-
         </div>
     );
 };

@@ -63,6 +63,7 @@
 .nb-image-preview {
     border: 1px solid #ccc;
     margin-top: 20px;
+    height: 900px;
   }
 
   .maple-grid-container {
@@ -72,9 +73,9 @@
 
 .maple-grid {
     display: grid;
-    grid-template-columns: repeat(15, 40px); /* 15 columnas */
-    grid-template-rows: repeat(10, 40px); /* 10 filas */
-    gap: 8px; /* Espacio entre huevos */
+    grid-template-columns: repeat(15, 40px);
+    grid-template-rows: repeat(10, 40px);
+    gap: 8px; 
     justify-content: center;
     padding: 20px;
     background-color: #f9f9f9;
